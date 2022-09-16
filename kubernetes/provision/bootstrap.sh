@@ -45,18 +45,10 @@ cat >>/etc/hosts<<EOF
 192.168.60.21   worker01.kubernetes.cluster     worker01
 192.168.60.22   worker02.kubernetes.cluster     worker02
 EOF
-echo "[>- Adding flannel network subnets]"
-mkdir -p /run/flannel >/dev/null 2>&1
-tee /run/flannel/subnet.env<<EOF
-FLANNEL_NETWORK=10.244.0.0/16
-FLANNEL_SUBNET=10.244.0.1/24
-FLANNEL_MTU=1450
-FLANNEL_IPMASQ=true
-EOF
 
 if [ $1 == "master" ]; then
 echo "[Step 2 - Initializing Master Node]"
-sudo kubeadm init --apiserver-advertise-address 192.168.60.11 --control-plane-endpoint 192.168.60.11 >/dev/null 2>&1
+sudo kubeadm init --apiserver-advertise-address 192.168.60.11 --control-plane-endpoint 192.168.60.11 --pod-network-cidr=10.244.0.0/16 >/dev/null 2>&1
 echo "[>- Installing Kubernetes network plugin]"
 echo "[>- Enable ssh password authentication]"
 sed -i 's/^PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config
