@@ -1,6 +1,7 @@
 #!/bin/bash
-
-
+# dont forget set KUBELET_EXTRA_ARGS="--cgroup-driver=cgroupfs" in /etc/default/kubelet
+# dont' forget to sudo ln -s /opt/cni/bin /usr/lib/cni on master (need woerk ?)
+# https://phoenixnap.com/kb/install-kubernetes-on-ubuntu
 nodetype="$1"
 
 echo "[Step 1- Installing required components]"
