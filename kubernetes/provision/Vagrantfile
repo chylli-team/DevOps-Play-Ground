@@ -1,16 +1,18 @@
 ENV['VAGRANT_NO_PARALLEL'] = 'yes'
-
+cluster_name = "c1"
 Vagrant.configure(2) do |config|
 
-  config.vm.define "master01" do |node|
-    node.vm.box               = "generic/ubuntu1804"
+  config.vm.define "#{cluster_name}-master01" do |node|
+    node.vm.box               = "generic/debian12"
     node.vm.box_check_update  = false
     node.vm.hostname          = "master01.kubernetes.cluster"
-    node.vm.network "private_network", ip: "192.168.60.11", name: "vboxnet4"
+    # TODO update readme
+    # please notice need create a host-only network adapter in virtualbox, and set network to 192.168.56/24, of course you can change it
+    node.vm.network "private_network", ip: "192.168.56.11", name: "VirtualBox Host-Only Ethernet Adapter"
     node.vm.provider :virtualbox do |v|
-      v.name    = "master01"
+      v.name    = "${cluster_name}-master01"
       v.memory  = 2048
-      v.cpus    = 2
+      v.cpus    = 4
     end
     node.vm.provider :libvirt do |v|
       v.memory  = 2048
@@ -19,23 +21,24 @@ Vagrant.configure(2) do |config|
     end
     node.vm.provision "shell", path: "bootstrap.sh", args: "master"
   end
-  (1..2).each do |i|
+  (1..1).each do |i|
     config.vm.define "worker0#{i}" do |node|
-      node.vm.box               = "generic/ubuntu1804"
+      node.vm.box               = "generic/debian12"
       node.vm.box_check_update  = false
       node.vm.hostname          = "worker0#{i}.kubernetes.cluster"
-      node.vm.network "private_network", ip: "192.168.60.2#{i}"
+      node.vm.network "private_network", ip: "192.168.60.2#{i}", name: "VirtualBox Host-Only Ethernet Adapter"
+
       node.vm.provider :virtualbox do |v|
-        v.name    = "worker0#{i}"
+        v.name    = "${cluster_name}-worker0#{i}"
         v.memory  = 1024
         v.cpus    = 1
       end
       node.vm.provider :libvirt do |v|
         v.memory  = 1024
         v.nested  = true
-        v.cpus    = 1
+        v.cpus    = 2
       end
-      node.vm.provision "shell", path: "bootstrap.sh", args: "worker"
+      node.vm.provision "shell", path: "bootstrap.sh", args: "worker 192.168.56"
     end
   end
 end
