@@ -67,13 +67,14 @@ EOF
 
 if [ $nodetype == "master" ]; then
 echo "[Step 2 - Initializing Master Node]"
-kubeadm init --apiserver-advertise-address $master_ip --control-plane-endpoint $master_ip --pod-network-cidr=10.244.0.0/16 >/dev/null 2>&1
+whoami
+echo "will run kubeadm now"
+kubeadm init --apiserver-advertise-address $master_ip --control-plane-endpoint $master_ip --pod-network-cidr=10.244.0.0/16
 echo "[>- Installing Kubernetes network plugin]"
 echo "[>- Enable ssh password authentication]"
 sed -i 's/^PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config
 echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
 systemctl reload sshd
-echo -e "kubeadmin\nkubeadmin" | passwd root >/dev/null 2>&1
 kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
 kubeadm token create --print-join-command > /joincluster.sh 2>/dev/null
 sudo -u vagrant mkdir /home/vagrant/.kube
