@@ -77,6 +77,7 @@ echo "[>- Enable ssh password authentication]"
 sed -i 's/^PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config
 echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
 systemctl reload sshd
+echo -e "kubeadmin\nkubeadmin" | passwd root >/dev/null 2>&1
 kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
 kubeadm token create --print-join-command > /joincluster.sh 2>/dev/null
 sudo -u vagrant mkdir /home/vagrant/.kube
