@@ -3,8 +3,9 @@
 it is a script that create a cluster on virtualbox on windows.
 
 # Preparing
+1. check your network adapter name that you will bridge to the cluster, and update the Vagrantfile with that name
 
-1. in virtualbox create a new host-only network with the name "VirtualBox Host-Only Ethernet Adapter" and ip 192.168.56.1 and mask. Of course you can set the ip and mask you want, but you have to change the script Vagrantfile.
+2. Update ip_segment in Varantfile. The ip will be appended with a index. For example, if ip_segment is '192.168.50.11', then 2 nodes ip will be 192.168.50.111 and 192.168.50.112
 
 # Creating
 1. run
