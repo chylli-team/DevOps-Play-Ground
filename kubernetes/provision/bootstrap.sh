@@ -59,13 +59,11 @@ sysctl --system >/dev/null 2>&1
 
 echo "[>- updating /etc/hosts file]"
 # TODO set network ip range in variable
-cat >>/etc/hosts <<EOF
-${ip_segment}.11   master01.kubernetes.cluster     master
-${ip_segment}.21   worker01.kubernetes.cluster     worker01
-${ip_segment}.22   worker02.kubernetes.cluster     worker02
-EOF
+# suppose we have 3 nodes. it is no harm if in fact there are only 2 nodes
 
-
+echo "${ip_segment}1   master01.kubernetes.cluster     master01" >> /etc/hosts
+echo "${ip_segment}2   worker01.kubernetes.cluster     worker01" >> /etc/hosts
+echo "${ip_segment}3   worker01.kubernetes.cluster     worker02" >> /etc/hosts
 
 if [ $nodetype == "master" ]; then
 echo "[Step 2 - Initializing Master Node]"
