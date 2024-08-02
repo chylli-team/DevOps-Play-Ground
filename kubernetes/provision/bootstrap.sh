@@ -86,8 +86,8 @@ fi;
 
 if [ $nodetype == "worker" ]; then
 echo "[Join worker to cluster]"
-apt install -qq -y sshpass >/dev/null 2>&1
-sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no master01.kubernetes.cluster:/joincluster.sh /joincluster.sh 2>/dev/null
-bash /joincluster.sh >/dev/null 2>&1
+apt install -qq -y sshpass
+sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no master01.kubernetes.cluster:/joincluster.sh /joincluster.sh
+bash /joincluster.sh
 fi;
 
