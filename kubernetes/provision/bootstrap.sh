@@ -41,6 +41,10 @@ sed -i '/swap/d' /etc/fstab
 swapoff -a
 
 echo "[>- Enable IP_Forward]"
+cat >> /etc/modules-load.d/containerd.conf <<EOF
+overlay
+br_netfilter
+EOF
 
 modprobe overlay >/dev/null 2>&1
 modprobe br_netfilter >/dev/null 2>&1
