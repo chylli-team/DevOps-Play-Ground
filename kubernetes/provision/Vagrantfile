@@ -8,7 +8,7 @@ Vagrant.configure(2) do |config|
     node.vm.box               = "generic/debian12"
     node.vm.box_check_update  = false
     node.vm.hostname          = "master01.kubernetes.cluster"
-    node.vm.network "public_network", ip: "#{ip_segment}#{ip_index}"
+    node.vm.network "public_network", ip: "#{ip_segment}#{ip_index}", bridge: "Realtek Gaming GbE Family Controller"
     ip_index+=1
     node.vm.provider :virtualbox do |v|
       v.name    = "#{cluster_name}-master01"
@@ -28,7 +28,7 @@ Vagrant.configure(2) do |config|
       node.vm.box               = "generic/debian12"
       node.vm.box_check_update  = false
       node.vm.hostname          = "worker0#{i}.kubernetes.cluster"
-      node.vm.network "private_network", ip: "#{ip_segment}#{ip_index}"
+      node.vm.network "public_network", ip: "#{ip_segment}#{ip_index}", bridge: "Realtek Gaming GbE Family Controller"
       ip_index+=1
       node.vm.provider :virtualbox do |v|
         v.name    = "#{cluster_name}-worker0#{i}"
