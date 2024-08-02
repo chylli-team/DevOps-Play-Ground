@@ -20,7 +20,8 @@ Vagrant.configure(2) do |config|
       v.nested  = true
       v.cpus    = 2
     end
-    node.vm.provision "shell", path: "bootstrap.sh", args: "master"
+
+    node.vm.provision "shell", path: "bootstrap.sh", args: "worker #{ip_segment}"
   end
   (1..1).each do |i|
     config.vm.define "worker0#{i}" do |node|
@@ -39,7 +40,7 @@ Vagrant.configure(2) do |config|
         v.nested  = true
         v.cpus    = 2
       end
-      node.vm.provision "shell", path: "bootstrap.sh", args: "worker 192.168.56 #{ip_segment}"
+      node.vm.provision "shell", path: "bootstrap.sh", args: "worker #{ip_segment}"
     end
   end
 end
