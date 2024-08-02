@@ -59,8 +59,8 @@ sysctl --system >/dev/null 2>&1
 
 echo "[>- updating /etc/hosts file]"
 # TODO set network ip range in variable
-cat >>/etc/hosts<<"EOF"
-${ip_segemnt}.11   master01.kubernetes.cluster     kmaster
+cat >>/etc/hosts <<EOF
+${ip_segment}.11   master01.kubernetes.cluster     master
 ${ip_segment}.21   worker01.kubernetes.cluster     worker01
 ${ip_segment}.22   worker02.kubernetes.cluster     worker02
 EOF
