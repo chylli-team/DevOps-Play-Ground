@@ -4,7 +4,7 @@ nodetype="$1"
 ip_segment="$2"
 echo "Node Type: $nodetype"
 echo "ip_segment: $ip_segment"
-master_ip="${ip_segment}.11"
+master_ip="${ip_segment}1"
 echo "[Step 1- Installing required components]"
 apt update >/dev/null 2>&1
 apt install -y apt-transport-https ca-certificates curl gnupg >/dev/null 2>&1
