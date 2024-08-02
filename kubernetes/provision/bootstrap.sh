@@ -2,6 +2,9 @@
 # https://phoenixnap.com/kb/install-kubernetes-on-ubuntu
 nodetype="$1"
 ip_segment="$2"
+echo "Node Type: $nodetype"
+echo "ip_segment: $ip_segment"
+exit 0
 master_ip="${ip_segment}.11"
 echo "[Step 1- Installing required components]"
 apt update >/dev/null 2>&1
