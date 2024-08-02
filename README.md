@@ -14,3 +14,5 @@ vagrant up
 kubectl get pods --all-namespaces
 ```
 if everything ok, then cluster is ready
+
+But since it is using host-only network, the cluster can be accessed only by the host machine.
